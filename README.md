@@ -4,7 +4,7 @@ This is a script that should build functioning Mercury
 cross-compilers for Android using the hlc.gc grade.
 
 This process is currently __experimental__.  I have not 
-yet ported the test suite, but I have manage to run executables.
+yet ported the test suite, but I have managed to run executables.
 
 Requires:
 - The Android NDK (tested with android-ndk-r20b)
@@ -34,7 +34,7 @@ sh ./mercury-cross-android.sh
 To use the compiler (do not add to PATH):
 
 ```sh
-/path/to/mercury-cross/bin/mmc --cflag -fPIC --cflag -fPIE --linkage static --make hello
+/path/to/mercury-cross/bin/mmc --cflag -fPIC --cflag -fPIE --make hello
 ```
 
 To push an executable to Android and run:
@@ -47,12 +47,19 @@ chmod 0755 hello
 ./hello
 ```
 
-It's possible to test locally with QEMU (eg., for armv7a):
+### Note: Unused DT Entry
 
-```sh
-/path/to/mercury-cross/bin/mmc --linkage static --make hello &&
-qemu-arm ./hello
+Until Android Marshmallow, the linker would output warnings about unused DT entries:
+
 ```
+WARNING: linker: ./hello: unused DT entry: type ...
+```
+
+In many cases, these can be safely ignored.
+
+If warnings are causing issues, you could use an ELF cleaner (such as the one 
+[here](https://github.com/termux/termux-elf-cleaner)). In some cases, static linking
+may also be acceptable. 
 
 ## Notes:
 - The distribution is non-relocatable
