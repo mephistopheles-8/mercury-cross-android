@@ -54,7 +54,6 @@ export CC=$TOOLCHAIN/bin/$TARGET$ANDROID_SDK-clang
 export CXX=$TOOLCHAIN/bin/$TARGET$ANDROID_SDK-clang++
 
 mercury_cv_cc_type=clang \
-mercury_cv_clang_version=4.2.1 \
 mercury_cv_sigaction_field=sa_handler \
 mercury_cv_sigcontext_struct_2arg=no \
 mercury_cv_sigcontext_struct_3arg=no \
@@ -68,7 +67,6 @@ mercury_cv_asm_labels=no \
 mercury_cv_gcc_model_fast=no \
 mercury_cv_gcc_model_reg=no \
 mercury_cv_cannot_use_structure_assignment=yes \
-C_COMPILER_TYPE="clang_$($CC -dumpversion)" \
 sh ./configure  --enable-libgrades=hlc.gc --host $TARGET --with-cc=$CC --prefix $TARGDIR && 
 mmake install -j3 
 ln -s $MERCURYHOME/bin/* $TARGDIR/bin || true
