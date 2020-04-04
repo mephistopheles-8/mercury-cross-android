@@ -9,14 +9,13 @@
 #
 #-----------------------------------------------------------------------------#
 
-NDK=/opt/android-ndk-r20b
-HOST_TAG=linux-x86_64
-ANDROID_SDK=21
-MERCURYHOME=/usr/local/mercury-DEV
-PREFIX=/opt/android/cross
-ROTD=2020-03-29
-ABIS=armv7a-linux-androideabi aarch64-linux-android i686-linux-android x86_64-linux-android
-
+NDK=${NDK:-/opt/android-ndk-r20b}
+HOST_TAG=${HOST_TAG:-linux-x86_64}
+ANDROID_SDK=${ANDROID_SDK:-21}
+MERCURYHOME=${MERCURYHOME:-/usr/local/mercury-DEV}
+PREFIX=${PREFIX:-/opt/android/cross/mercury}
+ROTD=${ROTD:-2020-03-29}
+ABIS=${ABIS:-"armv7a-linux-androideabi aarch64-linux-android i686-linux-android x86_64-linux-android"}
 
 VERSION=rotd-${ROTD}
 ARCHIVE=mercury-srcdist-${VERSION}.tar.gz
@@ -24,7 +23,10 @@ REPO=http://dl.mercurylang.org/rotd
 
 INSTALL_PATH=${PREFIX}/mercury-hlc.gc-${ROTD}
 
+if [ ! -e $ARCHIVE ]
+then
 wget $REPO/$ARCHIVE 
+fi
 
 for TARGET in $ABIS
 do
@@ -33,7 +35,7 @@ TARGDIR="${INSTALL_PATH}/root-${TARGET}"
 mkdir -p $TARGDIR
 cd mercury-srcdist-${VERSION}
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
-if [ $TARGET == armv7a-linux-androideabi ]
+if [ $TARGET = "armv7a-linux-androideabi" ]
 then
 export AR=$TOOLCHAIN/bin/arm-linux-androideabi-ar
 export AR=$TOOLCHAIN/bin/arm-linux-androideabi-ar
